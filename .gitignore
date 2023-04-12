@@ -49,3 +49,4 @@ application/logs/*
 !application/logs/.htaccess
 /vendor/
 /assets/uploads/*
+!/assets/uploads/.gitignore
