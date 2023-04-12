@@ -19,10 +19,8 @@ class Extract_invoice {
 
     function imgData($dataImg){
         // $this->ci->load->model('usuario_model');
-        $apiUrl='https://api.mindee.net/v1/products/mindee/invoices/v4/predict';
-        $apiKey="7858cc9e0c82d7cf7c1200fd51a2f4be";
         $client = new Client([
-            'base_uri' => $apiUrl,
+            'base_uri' => 'https://api.mindee.net/v1/products/mindee/invoices/v4/predict',
             'timeout'  => 5.0,
         ]);
         $path = $dataImg['full_path'];
@@ -35,7 +33,7 @@ class Extract_invoice {
                 '', [
                     'headers' => [
                         'Accept'                => 'application/json',
-                        'Authorization'         => 'Token '.$apiKey,
+                        'Authorization'         => 'Token 7858cc9e0c82d7cf7c1200fd51a2f4be',
                     ],
                     'form_params' => [
                         'document' => $base64
@@ -64,13 +62,16 @@ class Extract_invoice {
 			$datFactInsert['docType']=$preData->document_type->value;
 			$datFactInsert['dueDate']=$preData->due_date->value;
 			$datFactInsert['invoNum']=$preData->invoice_number->value;
+			$datFactInsert['taxes']=$preData->taxes[0]->value;
+			$datFactInsert['totAmount']=$preData->total_amount->value;
+			$datFactInsert['totNet']=$preData->total_net->value;
 			$datItemsInsert=$preData->line_items;
 
-            //CHECK EXISTENCIA DEL DOCUMENTO
+            //CHECK EXISTENCIA DEL
 			$confirm=$this->ci->jsondat->existCodeFact($datJsonInsert['idDoc']);
 			if(!$confirm[0] && $confirm[1]==null):
-				if($this->jsondat->addJsonDat($datJsonInsert)):
-					if($this->factdat->addFactDat($datFactInsert,$datItemsInsert)):
+				if($this->ci->jsondat->addJsonDat($datJsonInsert)):
+					if($this->ci->factdat->addFactDat($datFactInsert,$datItemsInsert)):
 						header('Content-type: text/javascript');
 						echo "Los Datos se registraron con Éxito..: ".$jsonDat;
 					else:

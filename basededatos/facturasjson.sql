@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-04-2023 a las 09:46:54
+-- Tiempo de generación: 12-04-2023 a las 10:28:50
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.0.25
 
@@ -34,7 +34,10 @@ CREATE TABLE `datafields` (
   `date` date NOT NULL,
   `docType` varchar(30) NOT NULL,
   `dueDate` date NOT NULL,
-  `invoNum` varchar(30) NOT NULL
+  `invoNum` varchar(30) NOT NULL,
+  `taxes` float NOT NULL,
+  `totAmount` float NOT NULL,
+  `totNet` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -98,19 +101,19 @@ ALTER TABLE `itemsfact`
 -- AUTO_INCREMENT de la tabla `datafields`
 --
 ALTER TABLE `datafields`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `datajson`
 --
 ALTER TABLE `datajson`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id extract facturajson', AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id extract facturajson', AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `itemsfact`
 --
 ALTER TABLE `itemsfact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Restricciones para tablas volcadas
