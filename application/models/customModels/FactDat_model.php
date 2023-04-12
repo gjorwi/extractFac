@@ -5,19 +5,34 @@
         public function addFactDat($factDat,$itemsFact)
         {
             try{
-                // print_r($factDat['idDocJson']);
-                // echo "///////////////////////////";
-                // var_dump($itemsFact);
-                $this->db->insert('datafields',$factDat);
-                foreach ($itemsFact as $item){
-                    $data['idDocFact '] = $factDat['idDocJson'];
-                    $data['unitPrice '] = $item->unit_price;
-                    $data['totAmount '] = $item->total_amount;
-                    $data['quantity '] = $item->quantity;
-                    $data['description '] = $item->description;
-                    $this->db->insert('itemsfact',$data);
+                $this->db->db_debug = false;
+
+                $res=$this->db->insert('datafields',$factDat);
+                if(!$res)
+                {
+                    $error = $this->db->error();
+                    //return array $error['code'] & $error['message']
+                    throw new Exception($error['message']);
                 }
-                return true;
+                else
+                {
+                    foreach ($itemsFact as $item){
+                        $data['idDocFact '] = $factDat['idDocJson'];
+                        $data['unitPrice '] = $item->unit_price;
+                        $data['totAmount '] = $item->total_amount;
+                        $data['quantity '] = $item->quantity;
+                        $data['description '] = $item->description;
+                        $this->db->insert('itemsfact',$data);
+                        if(!$res)
+                        {
+                            $error = $this->db->error();
+                            //return array $error['code'] & $error['message']
+                            throw new Exception($error['message']);
+                            
+                        }
+                    }
+                    return true;
+                }
             }catch(\Exception $e){
                 return false;
             }
