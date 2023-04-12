@@ -19,8 +19,10 @@ class Extract_invoice {
 
     function imgData($dataImg){
         // $this->ci->load->model('usuario_model');
+        $apiUrl='https://api.mindee.net/v1/products/mindee/invoices/v4/predict';
+        $apiKey="7858cc9e0c82d7cf7c1200fd51a2f4be";
         $client = new Client([
-            'base_uri' => 'https://api.mindee.net/v1/products/mindee/invoices/v4/predict',
+            'base_uri' => $apiUrl,
             'timeout'  => 5.0,
         ]);
         $path = $dataImg['full_path'];
@@ -33,7 +35,7 @@ class Extract_invoice {
                 '', [
                     'headers' => [
                         'Accept'                => 'application/json',
-                        'Authorization'         => 'Token 7858cc9e0c82d7cf7c1200fd51a2f4be',
+                        'Authorization'         => 'Token '.$apiKey,
                     ],
                     'form_params' => [
                         'document' => $base64
